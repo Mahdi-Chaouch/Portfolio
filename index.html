@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Étudiant</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">Mahdi.<span>Dev</span></a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="projets.html">Projets</a></li>
+            <li><a href="index.html#a-propos">À propos</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="accueil">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero-inner">
+          <div class="hero-content">
+            <p class="hero-kicker">Étudiant en informatique</p>
+            <h1 id="hero-title">Hey! Je suis Mahdi</h1>
+            <p class="hero-subtitle">
+              Je suis un étudiant passionné par le développement web, toujours
+              curieux d’apprendre de nouvelles technologies et de créer des
+              expériences modernes et soignées.
+            </p>
+            <div class="hero-actions">
+              <a href="projets.html" class="btn btn-primary">Voir mes projets</a>
+              <a href="#contact" class="btn btn-secondary">Me contacter</a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-card">
+              <div class="hero-photo">
+                <img
+                  src="assets/profile.jpg"
+                  alt="Portrait illustré de Mahdi"
+                />
+              </div>
+              <div class="hero-badges">
+                <span class="badge badge-accent">BUT Info · UPEC</span>
+                <span class="badge">HTML · CSS · C · SQL</span>
+                <span class="badge">Alternance dès sept. 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projets" class="section section-projects">
+        <div class="container">
+          <header class="section-header">
+            <h2>Projets en vedette</h2>
+            <p>
+              Une sélection de projets réalisés pendant mes études et en
+              autodidacte.
+            </p>
+          </header>
+
+          <div class="projects-grid">
+            <article class="project-card">
+              <h3>Taquin</h3>
+              <p>
+                Jeu du taquin (puzzle) en C89, réalisé dans le cadre du BUT
+                informatique.
+              </p>
+              <ul class="project-tags">
+                <li>C</li>
+              </ul>
+              <a href="projets.html#taquin" class="project-link">Voir le projet</a>
+            </article>
+
+            <article class="project-card">
+              <h3>Compagnons</h3>
+              <p>
+                Site d’un faux réseau social, créé dans le cadre d’une SAE en
+                BUT informatique.
+              </p>
+              <ul class="project-tags">
+                <li>HTML</li>
+              </ul>
+              <a href="projets.html#compagnons" class="project-link">Voir le projet</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="a-propos" class="section section-about">
+        <div class="container about-inner">
+          <div class="about-text">
+            <h2>À propos</h2>
+            <p>
+              Je suis un étudiant en informatique intéressé par le développement
+              web front-end et la création d’interfaces utilisateur
+              ergonomiques. J’aime expérimenter avec de nouveaux outils, réaliser
+              des petits projets et améliorer mes compétences au fil du temps.
+            </p>
+            <p>
+              Je recherche des opportunités de stage ou d’alternance pour mettre
+              en pratique mes connaissances et continuer à progresser au contact
+              d’une équipe.
+            </p>
+          </div>
+
+          <div class="about-skills">
+            <h3>Compétences</h3>
+            <ul class="skills-list">
+              <li class="badge">HTML5</li>
+              <li class="badge">CSS3</li>
+              <li class="badge">JavaScript</li>
+              <li class="badge">Git</li>
+              <li class="badge">Responsive Design</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact" class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-contact">
+          <h2>Contact</h2>
+          <p>
+            N’hésite pas à me contacter pour discuter d’un projet, d’un stage ou
+            simplement échanger sur le développement web.
+          </p>
+          <ul class="contact-list">
+            <li>
+              <a href="mailto:email@example.com">email@example.com</a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/Mahdi-Chaouch"
+                target="_blank"
+                rel="noreferrer noopener"
+                >GitHub</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/username"
+                target="_blank"
+                rel="noreferrer noopener"
+                >LinkedIn</a
+              >
+            </li>
+          </ul>
+        </div>
+        <p class="footer-copy">
+          &copy; <span id="current-year"></span> Mahdi. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+
+    <script src="scripts/main.js" defer></script>
+  </body>
+</html>

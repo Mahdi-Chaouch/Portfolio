@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projets · Mahdi.Dev</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body class="page-projets">
+    <div class="page-projets-bg" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">Mahdi.<span>Dev</span></a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="projets.html" class="nav-current">Projets</a></li>
+            <li><a href="index.html#a-propos">À propos</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="section section-page-hero">
+        <div class="container">
+          <header class="section-header">
+            <h1>Mes projets</h1>
+            <p>
+              Une sélection de projets réalisés pendant mes études et en
+              autodidacte. Clique sur « Savoir plus » pour les détails, technos et repo.
+            </p>
+          </header>
+        </div>
+      </section>
+
+      <section class="section section-projects-list">
+        <div class="container">
+          <div class="projects-list projects-list-vertical">
+            <!-- Projet 1: Taquin (https://github.com/Mahdi-Chaouch/Taquin) -->
+            <article id="taquin" class="project-detail-card project-card-hover" data-project data-index="0">
+              <div class="project-card-screenshot project-screenshot-16-9">
+                <img src="assets/screenshots/taquin.jpg" alt="Aperçu du jeu Taquin en console" onerror="this.src='https://placehold.co/640x360/262a36/9ca3af?text=Taquin+C89'" />
+              </div>
+              <div class="project-detail-body">
+                <h2>Taquin</h2>
+                <p class="project-timeline">
+                  <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                  BUT Informatique · Jeu en C89
+                </p>
+                <div class="project-badges">
+                  <span class="project-badge project-badge-university">Projet universitaire</span>
+                  <span class="project-badge project-badge-done">Terminé</span>
+                </div>
+                <p class="project-detail-desc">
+                  Jeu du taquin (puzzle) en C89. Projet réalisé dans le cadre du
+                  BUT informatique.
+                </p>
+                <div class="project-stats">
+                  <span class="project-stat"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> — fichiers</span>
+                  <span class="project-stat"><i class="fa-solid fa-code" aria-hidden="true"></i> — lignes</span>
+                  <span class="project-stat"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Repo GitHub</span>
+                </div>
+                <div class="project-actions">
+                  <a href="https://github.com/Mahdi-Chaouch/Taquin" target="_blank" rel="noreferrer noopener" class="btn btn-action btn-repo"><i class="fa-brands fa-github" aria-hidden="true"></i> Voir le repo</a>
+                  <a href="https://github.com/Mahdi-Chaouch/Taquin" target="_blank" rel="noreferrer noopener" class="btn btn-action btn-demo"><i class="fa-regular fa-play" aria-hidden="true"></i> Voir le code</a>
+                </div>
+                <button type="button" class="btn btn-outline btn-sm project-toggle" aria-expanded="false" aria-controls="project-1-details">
+                  Savoir plus
+                </button>
+                <div id="project-1-details" class="project-more" hidden>
+                  <div class="project-more-inner">
+                    <div class="project-more-block">
+                      <p class="project-more-label">Compétences utilisées</p>
+                      <ul class="project-skills-list">
+                        <li>Programmation C (C89)</li>
+                        <li>Algorithmique et logique de jeu</li>
+                        <li>Interface en ligne de commande</li>
+                        <li>Gestion des entrées utilisateur</li>
+                      </ul>
+                    </div>
+                    <div class="project-more-block">
+                      <p class="project-more-label">Technologies</p>
+                      <ul class="project-tags project-tags-icons">
+                        <li><i class="fa-solid fa-code" aria-hidden="true" title="C"></i> C (C89)</li>
+                      </ul>
+                    </div>
+                    <div class="project-tech-bars">
+                      <p class="project-more-label">Niveau par techno</p>
+                      <div class="tech-bar"><span class="tech-bar-label">C</span><div class="tech-bar-track"><div class="tech-bar-fill tech-bar-pct-85"></div></div><span class="tech-bar-pct">85%</span></div>
+                    </div>
+                    <div class="project-github-stats" data-repo="Mahdi-Chaouch/Taquin">
+                      <p class="project-more-label">GitHub</p>
+                      <span class="github-stat"><i class="fa-regular fa-star" aria-hidden="true"></i> <span class="github-stars">—</span> étoiles</span>
+                      <span class="github-stat"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span class="github-forks">—</span> forks</span>
+                      <span class="github-stat"><i class="fa-regular fa-clock" aria-hidden="true"></i> Dernier commit: <span class="github-commit">—</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Projet 2: Compagnons (https://github.com/Mahdi-Chaouch/Compagnons) -->
+            <article id="compagnons" class="project-detail-card project-card-hover" data-project data-index="1">
+              <div class="project-card-screenshot project-screenshot-16-9 project-screenshot-logo">
+                <img src="assets/compagnons-logo.png" alt="Logo Compagnons" class="project-logo-img" onerror="this.src='https://placehold.co/640x360/262a36/9ca3af?text=Compagnons+SAE'" />
+              </div>
+              <div class="project-detail-body">
+                <h2>Compagnons</h2>
+                <p class="project-timeline">
+                  <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                  SAE BUT Informatique · Faux réseau social
+                </p>
+                <div class="project-badges">
+                  <span class="project-badge project-badge-university">Projet universitaire</span>
+                  <span class="project-badge project-badge-done">Terminé</span>
+                </div>
+                <p class="project-detail-desc">
+                  Site internet d’un faux réseau social, créé dans le cadre d’une
+                  SAE (situation d’apprentissage évalué) en BUT informatique.
+                </p>
+                <div class="project-stats">
+                  <span class="project-stat"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> — fichiers</span>
+                  <span class="project-stat"><i class="fa-solid fa-code" aria-hidden="true"></i> — lignes</span>
+                  <span class="project-stat"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Repo GitHub</span>
+                </div>
+                <div class="project-actions">
+                  <a href="https://github.com/Mahdi-Chaouch/Compagnons" target="_blank" rel="noreferrer noopener" class="btn btn-action btn-repo"><i class="fa-brands fa-github" aria-hidden="true"></i> Voir le repo</a>
+                  <a href="Compagnons/index.html" class="btn btn-action btn-demo"><i class="fa-solid fa-external-link-alt" aria-hidden="true"></i> Visiter le site</a>
+                </div>
+                <button type="button" class="btn btn-outline btn-sm project-toggle" aria-expanded="false" aria-controls="project-2-details">
+                  Savoir plus
+                </button>
+                <div id="project-2-details" class="project-more" hidden>
+                  <div class="project-more-inner">
+                    <div class="project-more-block">
+                      <p class="project-more-label">Compétences utilisées</p>
+                      <ul class="project-skills-list">
+                        <li>Structure HTML et pages web</li>
+                        <li>Mise en page et contenu</li>
+                        <li>Travail en SAE (situation d’apprentissage)</li>
+                        <li>Projet en contexte BUT</li>
+                      </ul>
+                    </div>
+                    <div class="project-more-block">
+                      <p class="project-more-label">Technologies</p>
+                      <ul class="project-tags project-tags-icons">
+                        <li><i class="fa-brands fa-html5" aria-hidden="true" title="HTML5"></i> HTML</li>
+                      </ul>
+                    </div>
+                    <div class="project-tech-bars">
+                      <p class="project-more-label">Niveau par techno</p>
+                      <div class="tech-bar"><span class="tech-bar-label">HTML</span><div class="tech-bar-track"><div class="tech-bar-fill tech-bar-pct-85"></div></div><span class="tech-bar-pct">85%</span></div>
+                    </div>
+                    <div class="project-github-stats" data-repo="Mahdi-Chaouch/Compagnons">
+                      <p class="project-more-label">GitHub</p>
+                      <span class="github-stat"><i class="fa-regular fa-star" aria-hidden="true"></i> <span class="github-stars">—</span> étoiles</span>
+                      <span class="github-stat"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span class="github-forks">—</span> forks</span>
+                      <span class="github-stat"><i class="fa-regular fa-clock" aria-hidden="true"></i> Dernier commit: <span class="github-commit">—</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="footer-copy">
+          <a href="index.html#contact" class="footer-copy-link">Contact</a> ·
+          &copy; <span id="current-year"></span> Mahdi. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+
+    <script src="scripts/main.js" defer></script>
+    <script src="scripts/projets.js" defer></script>
+  </body>
+</html>
