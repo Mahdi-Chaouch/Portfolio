@@ -1,6 +1,7 @@
 const { Resend } = require("resend");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
@@ -29,12 +30,50 @@ module.exports = async (req, res) => {
 
         <p><strong>Nom :</strong> ${name}</p>
         <p><strong>Email :</strong> ${email}</p>
-        <p><strong>Sujet :</strong> ${subject}</p>
+        <p><strong>Sujet :</strong> ${subject || "Sans sujet"}</p>
 
         <p><strong>Message :</strong></p>
         <p>${message}</p>
       `,
     });
+
+    // Après l'envoi d'email, on tente d'envoyer également une notification sur Discord.
+    if (discordWebhookUrl) {
+      const plainMessage = String(message || "");
+      const truncatedMessage =
+        plainMessage.length > 1800
+          ? `${plainMessage.slice(0, 1800)}…`
+          : plainMessage;
+
+      const discordPayload = {
+        content: [
+          "📨 **Nouveau message reçu depuis le portfolio**",
+          `**Nom** : ${name}`,
+          `**Email** : ${email}`,
+          `**Sujet** : ${subject || "Sans sujet"}`,
+          "",
+          truncatedMessage || "_(message vide)_",
+        ].join("\n"),
+      };
+
+      try {
+        await fetch(discordWebhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(discordPayload),
+        });
+      } catch (discordError) {
+        // On ne fait pas échouer la requête si Discord est indisponible.
+        console.error("Discord webhook failed", discordError);
+      }
+    } else {
+      // Pas de webhook configuré : on log seulement côté serveur.
+      console.warn(
+        "DISCORD_WEBHOOK_URL is not set; contact messages will not be mirrored to Discord."
+      );
+    }
 
     res.status(200).json({ success: true });
   } catch (error) {
