@@ -77,6 +77,19 @@
                 </div>
               </div>
 
+              <!-- Champ honeypot anti-spam (caché pour les humains) -->
+              <div class="contact-form-group contact-form-honeypot" aria-hidden="true">
+                <label for="contact-website" class="visually-hidden">Ne pas remplir ce champ</label>
+                <input
+                  type="text"
+                  id="contact-website"
+                  name="website"
+                  tabindex="-1"
+                  autocomplete="off"
+                  placeholder="Votre site web"
+                />
+              </div>
+
               <div class="contact-form-group">
                 <label for="contact-subject">Sujet</label>
                 <input

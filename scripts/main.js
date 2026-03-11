@@ -258,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = String(formData.get("email") || "").trim();
       const subject = String(formData.get("subject") || "").trim();
       const message = String(formData.get("message") || "").trim();
+      const website = String(formData.get("website") || "").trim();
 
       let hasError = false;
 
@@ -284,6 +285,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }),
       }).catch(() => {});
       // #endregion
+
+      // Honeypot anti-spam : si rempli, on marque un succès côté UI
+      // mais on n'envoie rien au backend.
+      if (website) {
+        if (successEl) {
+          successEl.textContent =
+            "Merci pour votre message ! Votre email a bien été envoyé.";
+          window.setTimeout(() => {
+            if (successEl.textContent) {
+              successEl.textContent = "";
+            }
+          }, 4000);
+        }
+        return;
+      }
 
       if (!name) {
         setFieldError("name", "Le nom est obligatoire.");
