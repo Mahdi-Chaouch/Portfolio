@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    contactForm.addEventListener("submit", (event) => {
+    contactForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       if (successEl) {
@@ -297,44 +297,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (hasError) return;
 
-      contactForm.reset();
-      if (successEl) {
-        successEl.textContent =
-          "Merci pour votre message ! Le formulaire sera bientôt connecté.";
-        window.setTimeout(() => {
-          if (successEl.textContent) {
-            successEl.textContent = "";
-          }
-        }, 4000);
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, subject, message }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        contactForm.reset();
+        if (successEl) {
+          successEl.textContent =
+            "Merci pour votre message ! Votre email a bien été envoyé.";
+          window.setTimeout(() => {
+            if (successEl.textContent) {
+              successEl.textContent = "";
+            }
+          }, 4000);
+        }
+      } catch (error) {
+        if (successEl) {
+          successEl.textContent =
+            "Une erreur est survenue lors de l’envoi. Merci de réessayer plus tard.";
+        } else {
+          // Fallback minimal si l’élément de succès n’existe pas
+          alert(
+            "Une erreur est survenue lors de l’envoi. Merci de réessayer plus tard.",
+          );
+        }
       }
     });
   }
-  //formulaire de contact
-  const form = document.querySelector("form");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const data = {
-    name: form.name.value,
-    email: form.email.value,
-    subject: form.subject.value,
-    message: form.message.value
-  };
-
-  const res = await fetch("/api/contact", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (res.ok) {
-    alert("Message envoyé !");
-    form.reset();
-  } else {
-    alert("Erreur lors de l'envoi.");
-  }
-});
 });
