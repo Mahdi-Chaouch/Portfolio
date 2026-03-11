@@ -32,11 +32,53 @@ async function load(selector, url) {
     // Mise à jour de l’année si nécessaire
     const yearSpan = document.getElementById('year');
     if (yearSpan) yearSpan.textContent = String(new Date().getFullYear());
+
+    // #region agent log
+    fetch('http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Debug-Session-Id': 'a7dafc',
+      },
+      body: JSON.stringify({
+        sessionId: 'a7dafc',
+        runId: 'pre-fix',
+        hypothesisId: 'H4',
+        location: 'include.js:load:success',
+        message: 'Fragment HTML chargé avec succès',
+        data: { selector, url, path: window.location.pathname },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+    // #endregion agent log
   } catch (error) {
     console.error('Problème JS :', error);
 
-
     el.innerHTML = '<p>Erreur de chargement du menu.</p>';
+
+    // #region agent log
+    fetch('http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Debug-Session-Id': 'a7dafc',
+      },
+      body: JSON.stringify({
+        sessionId: 'a7dafc',
+        runId: 'pre-fix',
+        hypothesisId: 'H4',
+        location: 'include.js:load:error',
+        message: "Erreur lors du chargement d'un fragment HTML",
+        data: {
+          selector,
+          url,
+          path: window.location.pathname,
+          error: String(error && error.message ? error.message : error),
+        },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+    // #endregion agent log
   }
 }
 
