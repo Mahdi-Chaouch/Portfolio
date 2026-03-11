@@ -360,22 +360,73 @@
     }
   </style>
   <style>
-    /* Dark mode*/
-    body.dark-mode .event-card{
+    /* Dark mode – événements */
+    body.dark-mode .events-head {
+      background: #020617;
+    }
+
+    body.dark-mode .events-head .events-sub {
+      color: rgba(226,232,240,0.75);
+    }
+
+    body.dark-mode .event-card {
       background: #1e293b;
       border-color: #334155;
       box-shadow: none;
     }
-    body.dark-mode .event-head h3,
-    body.dark-mode .event-head span,
-    body.dark-mode .event-info,
-    body.dark-mode .event-foot{
+
+    body.dark-mode .event-banner {
+      border-bottom-color: rgba(15,23,42,0.6);
+      background: rgba(15,23,42,0.9);
+    }
+
+    body.dark-mode .event-banner.event-banner--contain {
+      background: rgba(15,23,42,0.95);
+    }
+
+    /* Pastille de date */
+    body.dark-mode .event-date {
+      background: rgba(15,23,42,0.95);
+      border-color: rgba(30,64,175,0.7);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.6);
+    }
+
+    body.dark-mode .event-date .day {
+      color: #bfdbfe;
+    }
+
+    body.dark-mode .event-date .month {
+      color: #e5e7eb;
+    }
+
+    /* Textes de la carte */
+    body.dark-mode .event-info h3 {
+      color: #e5e7eb;
+    }
+
+    body.dark-mode .event-meta span {
       color: #cbd5e1;
     }
-    body.dark-mode .btn-participate{
+
+    body.dark-mode .event-desc {
+      color: #e2e8f0;
+    }
+
+    body.dark-mode .event-foot {
+      color: #94a3b8;
+    }
+
+    /* Bouton */
+    body.dark-mode .btn-participate {
       background: rgba(56,189,248,0.12);
       border-color: rgba(56,189,248,0.28);
       color: #e2e8f0;
+    }
+
+    body.dark-mode .btn-participate.is-on {
+      background: rgba(34,197,94,0.18);
+      border-color: rgba(34,197,94,0.5);
+      color: #bbf7d0;
     }
   </style>
   <script src="../js/include.js"></script>

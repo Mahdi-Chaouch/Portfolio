@@ -99,7 +99,6 @@
                 <div class="post-meta">il y a 3h • Fontainebleau</div>
               </div>
             </div>
-            <a class="follow" href="#" style="opacity:.8; pointer-events:none;">Moi</a>
           </header>
 
           <p class="post-text">Balade du jour 🌲🐾 Mochi a adoré !</p>
@@ -128,7 +127,6 @@
                 <div class="post-meta">il y a 2 jours • Créteil</div>
               </div>
             </div>
-            <a class="follow" href="#" style="opacity:.8; pointer-events:none;">Moi</a>
           </header>
 
           <p class="post-text">Tigrou sur la machine à laver… classique 😹</p>
@@ -363,6 +361,15 @@
     }
 
     /* Dark mode*/
+    body.dark-mode .profile-cover {
+      background: #020617;
+    }
+    body.dark-mode .profile-avatar {
+      background: rgba(15,23,42,0.95);
+      border-color: #1f2937;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.7);
+    }
+
     body.dark-mode .profile-name,
     body.dark-mode .profile-handle,
     body.dark-mode .profile-bio,
@@ -370,17 +377,36 @@
     body.dark-mode .profile-tabs button {
       color: #e2e8f0;
     }
+
+    body.dark-mode .profile-handle {
+      color: #9ca3af;
+    }
+
     body.dark-mode .profile-stats .n{
       color: #38bdf8;
     }
+
+    body.dark-mode .stat {
+      background: rgba(15,23,42,0.85);
+      border-color: #1f2937;
+    }
+
+    body.dark-mode .profile-actions .btn-edit {
+      background: #0b1120;
+      border-color: #1f2937;
+      color: #e2e8f0;
+    }
+
     body.dark-mode .profile-tabs{
       border-color: #1f2937;
     }
+
     body.dark-mode .tab{
       background: #111827;
       border-color: #1f2937;
       color: #e2e8f0;
     }
+
     body.dark-mode .tab.active{
       background: rgba(56,189,248,0.14);
       border-color: rgba(56,189,248,0.32);

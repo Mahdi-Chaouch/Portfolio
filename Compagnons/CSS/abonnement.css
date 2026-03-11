@@ -1,6 +1,7 @@
 /* ===== STYLE PAGE ABONNEMENT (Épuré & Moderne) ===== */
 
-body {
+/* Thème clair par défaut, limité à la page abonnement pour ne pas casser le dark mode global */
+body.page-abonnement {
     background-color: #ffffff;
     color: #1d1d1f;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -261,6 +262,88 @@ details p {
     margin-top: 10px;
     color: #6e6e73;
     line-height: 1.6;
+}
+
+/* ===================== MODE SOMBRE PAGE ABONNEMENT ===================== */
+
+body.dark-mode.page-abonnement {
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+/* Hero */
+body.dark-mode.page-abonnement .sub-hero p {
+    color: #cbd5f5;
+}
+
+/* Petites bulles d'explication */
+body.dark-mode.page-abonnement .feature-item {
+    background: #0b1120;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+}
+
+body.dark-mode.page-abonnement .feature-item h3 {
+    color: #e5e7eb;
+}
+
+body.dark-mode.page-abonnement .feature-item p {
+    color: #cbd5f5;
+}
+
+/* Section « Nos formules » */
+body.dark-mode.page-abonnement .plans-section {
+    background-color: #020617;
+}
+
+body.dark-mode.page-abonnement .plans-section p {
+    color: #9ca3af !important;
+}
+
+body.dark-mode.page-abonnement .plan-card {
+    background: #020617;
+    border-color: #1f2937;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+}
+
+body.dark-mode.page-abonnement .plan-name {
+    color: #9ca3af;
+}
+
+body.dark-mode.page-abonnement .plan-price {
+    color: #f9fafb;
+}
+
+body.dark-mode.page-abonnement .plan-price span {
+    color: #9ca3af;
+}
+
+body.dark-mode.page-abonnement .plan-features li {
+    color: #e5e7eb;
+}
+
+body.dark-mode.page-abonnement .btn-outline {
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+body.dark-mode.page-abonnement .btn-outline:hover {
+    border-color: #e5e7eb;
+    background: #e5e7eb;
+    color: #020617;
+}
+
+/* FAQ */
+body.dark-mode.page-abonnement .faq-section h2 {
+    color: #e5e7eb;
+}
+
+body.dark-mode.page-abonnement details {
+    border-bottom-color: #1f2937;
+}
+
+body.dark-mode.page-abonnement details p {
+    color: #cbd5f5;
 }
 
 /* Responsive Mobile */
