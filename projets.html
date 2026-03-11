@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Projets · Mahdi.Dev</title>
     <link rel="icon" href="assets/favicon.png" type="image/png" />
     <link rel="stylesheet" href="styles/main.css" />
@@ -14,13 +14,20 @@
     <header class="site-header">
       <div class="container header-inner">
         <a href="index.html" class="logo">Mahdi.<span>Dev</span></a>
+        <button type="button" class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-list">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
         <nav class="main-nav">
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="projets.html" class="nav-current">Projets</a></li>
-            <li><a href="a-propos.html">À propos</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
+          <div id="nav-list" class="nav-list-wrap">
+            <ul>
+              <li><a href="index.html">Accueil</a></li>
+              <li><a href="projets.html" class="nav-current">Projets</a></li>
+              <li><a href="a-propos.html">À propos</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>

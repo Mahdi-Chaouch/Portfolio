@@ -4,6 +4,42 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   }
 
+  // Menu hamburger (mobile)
+  const navToggle = document.querySelector(".nav-toggle");
+  const navListWrap = document.querySelector(".nav-list-wrap");
+  if (navToggle && navListWrap) {
+    function openNav() {
+      document.body.classList.add("nav-open");
+      navToggle.setAttribute("aria-expanded", "true");
+      navToggle.setAttribute("aria-label", "Fermer le menu");
+    }
+    function closeNav() {
+      document.body.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Ouvrir le menu");
+    }
+    navToggle.addEventListener("click", () => {
+      if (document.body.classList.contains("nav-open")) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+    navListWrap.addEventListener("click", (e) => {
+      if (e.target === navListWrap) {
+        closeNav();
+      }
+    });
+    document.querySelectorAll(".main-nav a").forEach((link) => {
+      link.addEventListener("click", () => closeNav());
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && document.body.classList.contains("nav-open")) {
+        closeNav();
+      }
+    });
+  }
+
   // Bouton « Revenir en haut » (affiché au défilement)
   const backToTop = document.createElement("button");
   backToTop.type = "button";
