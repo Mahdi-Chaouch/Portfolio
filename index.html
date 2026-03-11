@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Étudiant</title>
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
     <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
   </head>
-  <body>
+  <body class="page-accueil">
     <header class="site-header">
       <div class="container header-inner">
         <a href="index.html" class="logo">Mahdi.<span>Dev</span></a>
@@ -14,15 +16,16 @@
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="projets.html">Projets</a></li>
-            <li><a href="index.html#a-propos">À propos</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="a-propos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
     <main id="accueil">
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero hero-with-bg" aria-labelledby="hero-title">
+        <div class="hero-bg-decor" aria-hidden="true"></div>
         <div class="container hero-inner">
           <div class="hero-content">
             <p class="hero-kicker">Étudiant en informatique</p>
@@ -34,29 +37,54 @@
             </p>
             <div class="hero-actions">
               <a href="projets.html" class="btn btn-primary">Voir mes projets</a>
-              <a href="#contact" class="btn btn-secondary">Me contacter</a>
+              <a href="contact.html" class="btn btn-secondary">Me contacter</a>
             </div>
           </div>
 
           <div class="hero-visual" aria-hidden="true">
-            <div class="hero-card">
-              <div class="hero-photo">
+            <div class="hero-card hero-card-enhanced">
+              <div class="hero-photo hero-photo-glow">
                 <img
                   src="assets/profile.jpg"
                   alt="Portrait illustré de Mahdi"
                 />
-              </div>
-              <div class="hero-badges">
-                <span class="badge badge-accent">BUT Info · UPEC</span>
-                <span class="badge">HTML · CSS · C · SQL</span>
-                <span class="badge">Alternance dès sept. 2026</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="projets" class="section section-projects">
+      <section class="section section-stats section-reveal">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-icon">
+                <i data-lucide="folder-kanban"></i>
+              </div>
+              <span class="stat-card-value">5</span>
+              <span class="stat-card-label">Projets réalisés</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">
+                <i data-lucide="layers"></i>
+              </div>
+              <span class="stat-card-value">+10</span>
+              <span class="stat-card-label">Technologies utilisées</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">
+                <i data-lucide="calendar-search"></i>
+              </div>
+              <span class="stat-card-value">Sept. 2026</span>
+              <span class="stat-card-label">Recherche alternance</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-separator" aria-hidden="true"></section>
+
+      <section id="projets" class="section section-projects section-reveal">
         <div class="container">
           <header class="section-header">
             <h2>Projets en vedette</h2>
@@ -67,7 +95,10 @@
           </header>
 
           <div class="projects-grid">
-            <article class="project-card">
+            <article class="project-card project-card-hover">
+              <div class="project-card-icon">
+                <i data-lucide="puzzle"></i>
+              </div>
               <h3>Taquin</h3>
               <p>
                 Jeu du taquin (puzzle) en C89, réalisé dans le cadre du BUT
@@ -79,7 +110,10 @@
               <a href="projets.html#taquin" class="project-link">Voir le projet</a>
             </article>
 
-            <article class="project-card">
+            <article class="project-card project-card-hover">
+              <div class="project-card-icon">
+                <i data-lucide="users-round"></i>
+              </div>
               <h3>Compagnons</h3>
               <p>
                 Site d’un faux réseau social, créé dans le cadre d’une SAE en
@@ -94,10 +128,17 @@
         </div>
       </section>
 
-      <section id="a-propos" class="section section-about">
+      <section class="section-separator" aria-hidden="true"></section>
+
+      <section id="a-propos" class="section section-about section-reveal">
         <div class="container about-inner">
-          <div class="about-text">
-            <h2>À propos</h2>
+          <div class="about-text about-text-card">
+            <div class="about-text-header">
+              <span class="about-text-icon" aria-hidden="true">
+                <i data-lucide="user"></i>
+              </span>
+              <h2>À propos</h2>
+            </div>
             <p>
               Je suis un étudiant en informatique intéressé par le développement
               web front-end et la création d’interfaces utilisateur
@@ -113,16 +154,33 @@
 
           <div class="about-skills">
             <h3>Compétences</h3>
-            <ul class="skills-list">
-              <li class="badge">HTML5</li>
-              <li class="badge">CSS3</li>
-              <li class="badge">JavaScript</li>
-              <li class="badge">Git</li>
-              <li class="badge">Responsive Design</li>
+            <ul class="skills-list skills-list-modern">
+              <li class="skill-badge">
+                <i data-lucide="code-2"></i>
+                <span>HTML</span>
+              </li>
+              <li class="skill-badge">
+                <i data-lucide="palette"></i>
+                <span>CSS</span>
+              </li>
+              <li class="skill-badge">
+                <i data-lucide="braces"></i>
+                <span>JavaScript</span>
+              </li>
+              <li class="skill-badge">
+                <i data-lucide="git-branch"></i>
+                <span>Git</span>
+              </li>
+              <li class="skill-badge">
+                <i data-lucide="terminal"></i>
+                <span>C</span>
+              </li>
             </ul>
           </div>
         </div>
       </section>
+
+      <section class="section-separator" aria-hidden="true"></section>
     </main>
 
     <footer id="contact" class="site-footer">
@@ -130,12 +188,12 @@
         <div class="footer-contact">
           <h2>Contact</h2>
           <p>
-            N’hésite pas à me contacter pour discuter d’un projet, d’un stage ou
+            N’hésite pas à me contacter pour discuter d’un projet, d’un stage, d'une alternance ou
             simplement échanger sur le développement web.
           </p>
           <ul class="contact-list">
             <li>
-              <a href="mailto:email@example.com">email@example.com</a>
+              <a href="mailto:mahdichaouch435@gmail.com">mahdichaouch435@gmail.com</a>
             </li>
             <li>
               <a
@@ -147,7 +205,7 @@
             </li>
             <li>
               <a
-                href="https://www.linkedin.com/in/username"
+                href="https://www.linkedin.com/in/mahdi-chaouch-3a27263a0/"
                 target="_blank"
                 rel="noreferrer noopener"
                 >LinkedIn</a

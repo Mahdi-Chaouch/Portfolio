@@ -5,8 +5,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (window.location.hash) {
-    const target = document.querySelector(window.location.hash);
+    const hash = window.location.hash.slice(1);
+    const target = document.getElementById(hash);
     if (target) {
+      const details = target.closest(".project-more");
+      if (details && details.hidden) {
+        const btn = document.querySelector(`[aria-controls="${details.id}"]`);
+        if (btn) {
+          btn.setAttribute("aria-expanded", "true");
+          details.hidden = false;
+        }
+      }
       requestAnimationFrame(() => {
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
@@ -63,5 +72,49 @@ document.addEventListener("DOMContentLoaded", () => {
         if (forksEl) forksEl.textContent = "—";
         if (commitEl) commitEl.textContent = "—";
       });
+  });
+
+  // Lightbox : clic sur un screenshot → plein écran
+  const lightbox = document.getElementById("screenshot-lightbox");
+  const lightboxImg = lightbox?.querySelector(".lightbox__img");
+  const lightboxBackdrop = lightbox?.querySelector(".lightbox__backdrop");
+  const lightboxClose = lightbox?.querySelector(".lightbox__close");
+
+  function openLightbox(src, alt) {
+    if (!lightbox || !lightboxImg) return;
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || "Screenshot";
+    lightbox.classList.add("lightbox--open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove("lightbox--open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".project-screenshots-grid img").forEach((img) => {
+    img.setAttribute("role", "button");
+    img.setAttribute("tabindex", "0");
+    img.title = "Agrandir";
+    img.addEventListener("click", () => openLightbox(img.src, img.alt));
+    img.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(img.src, img.alt);
+      }
+    });
+  });
+
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener("click", closeLightbox);
+  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox?.classList.contains("lightbox--open")) {
+      closeLightbox();
+    }
   });
 });

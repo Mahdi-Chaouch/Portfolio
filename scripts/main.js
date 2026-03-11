@@ -1,4 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Lucide Icons
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
+
+  // Bouton « Revenir en haut » (affiché au défilement)
+  const backToTop = document.createElement("button");
+  backToTop.type = "button";
+  backToTop.className = "back-to-top";
+  backToTop.setAttribute("aria-label", "Revenir en haut de la page");
+  backToTop.innerHTML = "↑";
+  document.body.appendChild(backToTop);
+
+  const scrollThreshold = 300;
+  function updateBackToTop() {
+    if (window.scrollY > scrollThreshold) {
+      backToTop.classList.add("is-visible");
+    } else {
+      backToTop.classList.remove("is-visible");
+    }
+  }
+  window.addEventListener("scroll", updateBackToTop, { passive: true });
+  updateBackToTop();
+
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
   if (window.location.hash) {
     const target = document.querySelector(window.location.hash);
     if (target) {
@@ -93,4 +121,36 @@ document.addEventListener("DOMContentLoaded", () => {
     el.classList.add("animate-on-load");
     el.style.animationDelay = `${delay}s`;
   });
+
+  // Page À propos : fade-in des sections au scroll
+  const aboutReveals = document.querySelectorAll(".about-reveal");
+  if (aboutReveals.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { rootMargin: "0px 0px -40px 0px", threshold: 0.05 }
+    );
+    aboutReveals.forEach((section) => observer.observe(section));
+  }
+
+  // Page d'accueil : fade-in des sections au scroll
+  const sectionReveals = document.querySelectorAll(".section-reveal");
+  if (sectionReveals.length > 0) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { rootMargin: "0px 0px -50px 0px", threshold: 0.08 }
+    );
+    sectionReveals.forEach((section) => revealObserver.observe(section));
+  }
 });
