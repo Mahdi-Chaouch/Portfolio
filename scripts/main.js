@@ -309,4 +309,32 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+  //formulaire de contact
+  const form = document.querySelector("form");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: form.name.value,
+    email: form.email.value,
+    subject: form.subject.value,
+    message: form.message.value
+  };
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    alert("Message envoyé !");
+    form.reset();
+  } else {
+    alert("Erreur lors de l'envoi.");
+  }
+});
 });
