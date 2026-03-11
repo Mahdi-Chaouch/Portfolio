@@ -7,14 +7,47 @@ document.addEventListener("DOMContentLoaded", () => {
   // Menu hamburger (mobile)
   const navToggle = document.querySelector(".nav-toggle");
   const navListWrap = document.querySelector(".nav-list-wrap");
-  if (navToggle && navListWrap) {
+  const mainNav = document.querySelector(".main-nav");
+  const headerInner = mainNav ? mainNav.parentElement : null;
+  if (navToggle && navListWrap && mainNav && headerInner) {
     function openNav() {
       document.body.classList.add("nav-open");
+      document.body.appendChild(mainNav);
       navToggle.setAttribute("aria-expanded", "true");
       navToggle.setAttribute("aria-label", "Fermer le menu");
+      // #region agent log
+      requestAnimationFrame(() => {
+        const rNav = mainNav ? mainNav.getBoundingClientRect() : null;
+        const rToggle = navToggle.getBoundingClientRect();
+        const rWrap = navListWrap.getBoundingClientRect();
+        const csNav = mainNav ? getComputedStyle(mainNav) : null;
+        const csToggle = getComputedStyle(navToggle);
+        const header = mainNav ? mainNav.closest(".site-header") : null;
+        const headerRect = header ? header.getBoundingClientRect() : null;
+        const payload = {
+          sessionId: "78cdad",
+          location: "main.js:openNav",
+          message: "menu opened",
+          data: {
+            viewport: { w: window.innerWidth, h: window.innerHeight },
+            mainNavRect: rNav ? { top: rNav.top, left: rNav.left, width: rNav.width, height: rNav.height } : null,
+            navToggleRect: { top: rToggle.top, left: rToggle.left, width: rToggle.width, height: rToggle.height },
+            navListWrapRect: { top: rWrap.top, left: rWrap.left, width: rWrap.width, height: rWrap.height },
+            headerRect: headerRect ? { top: headerRect.top, left: headerRect.left, width: headerRect.width, height: headerRect.height } : null,
+            mainNavPosition: csNav ? csNav.position : null,
+            mainNavZIndex: csNav ? csNav.zIndex : null,
+            navToggleZIndex: csToggle.zIndex
+          },
+          timestamp: Date.now(),
+          hypothesisId: "H1-H5"
+        };
+        fetch("http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "78cdad" }, body: JSON.stringify(payload) }).catch(() => {});
+      });
+      // #endregion
     }
     function closeNav() {
       document.body.classList.remove("nav-open");
+      headerInner.appendChild(mainNav);
       navToggle.setAttribute("aria-expanded", "false");
       navToggle.setAttribute("aria-label", "Ouvrir le menu");
     }
@@ -31,7 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     document.querySelectorAll(".main-nav a").forEach((link) => {
-      link.addEventListener("click", () => closeNav());
+      link.addEventListener("click", () => {
+        /* fermer le menu après un court délai pour laisser la navigation se faire */
+        setTimeout(closeNav, 0);
+      });
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && document.body.classList.contains("nav-open")) {

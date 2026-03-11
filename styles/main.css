@@ -1949,27 +1949,73 @@ main {
     font-size: 16px;
   }
 
+  /* Burger : toujours à droite, au-dessus du menu overlay */
   .nav-toggle {
     display: flex;
+    margin-left: auto;
+    order: 2;
+    position: relative;
+    z-index: 50;
   }
 
-  .nav-list-wrap {
+  /* Nav hors flux pour ne garder que logo + burger dans le header ; ne pas bloquer les clics quand fermé */
+  .main-nav {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+  }
+
+  /* Quand le menu est ouvert : .main-nav devient l’overlay plein écran (évite le clipping) */
+  /* Neutraliser backdrop-filter sur le header quand le menu est ouvert :
+     sinon le header crée un bloc conteneur et l’overlay fixed ne couvre que la zone du header. */
+  body.nav-open .site-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  body.nav-open .main-nav {
+    pointer-events: auto;
     position: fixed;
     inset: 0;
-    z-index: 25;
-    background: rgba(27, 29, 35, 0.95);
+    z-index: 45;
+    background: rgba(27, 29, 35, 0.98);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding-top: 5.25rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  /* Contenu du menu : liste en haut (évite que la nav apparaisse au milieu du hero) */
+  .nav-list-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 280px;
+    flex-shrink: 0;
+    margin-top: 0;
+  }
+
+  /* Fermé : cacher la nav (overlay) et ne pas bloquer les clics */
+  .nav-list-wrap {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.25s ease, visibility 0.25s ease;
   }
 
-  body.nav-open .nav-list-wrap {
+  body.nav-open .main-nav .nav-list-wrap {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -1979,24 +2025,44 @@ main {
     overflow: hidden;
   }
 
+  /* Liste des liens : empilée, bien centrée, tous visibles */
   .main-nav ul {
     flex-direction: column;
     gap: 0;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    width: 100%;
+    max-width: 280px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
   }
 
   .main-nav ul li {
     width: 100%;
     text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .main-nav ul li:last-child {
+    border-bottom: none;
   }
 
   .main-nav a {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.75rem 1.5rem;
+    min-height: 52px;
+    min-width: 48px;
+    padding: 0.85rem 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .main-nav a:hover {
+    color: var(--accent);
   }
 
   main {
@@ -2005,15 +2071,65 @@ main {
 
   .header-inner {
     padding-block: 0.7rem;
+    position: relative;
+  }
+
+  .header-inner .logo {
+    order: 1;
+  }
+
+  /* Hero mobile : texte d’abord, photo ensuite, hiérarchie claire */
+  .hero {
+    padding-top: 1.25rem;
+    padding-bottom: 2.25rem;
   }
 
   .hero-inner {
-    grid-template-columns: minmax(0, 1fr);
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    text-align: center;
+  }
+
+  /* Ordre explicite : contenu en premier, photo après */
+  .hero-content {
+    order: 1;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 
   .hero-visual {
-    order: -1;
+    order: 2;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.75rem;
+  }
+
+  .hero-kicker {
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 1.25rem;
+    max-width: 36ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  /* Photo légèrement réduite sur mobile */
+  .hero-card {
+    width: min(240px, 100%);
+    margin: 0 auto;
   }
 
   .hero-photo-badge {
@@ -2060,9 +2176,9 @@ main {
     gap: 1rem;
   }
 
+  /* ne pas réduire le menu overlay (reste lisible) */
   .main-nav ul {
-    gap: 0.7rem;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
   }
 
   .logo {
@@ -2070,7 +2186,7 @@ main {
   }
 
   .hero-card {
-    width: 100%;
+    width: min(220px, 100%);
   }
 
   .hero-actions {
