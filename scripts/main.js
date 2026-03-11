@@ -261,6 +261,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let hasError = false;
 
+      // #region agent log
+      fetch("http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Debug-Session-Id": "2a0d40",
+        },
+        body: JSON.stringify({
+          sessionId: "2a0d40",
+          runId: "contact-form",
+          hypothesisId: "H1",
+          location: "main.js:contact-submit:start",
+          message: "Contact form submit start",
+          data: {
+            nameLength: name.length,
+            hasEmail: Boolean(email),
+            subjectLength: subject.length,
+            hasMessage: Boolean(message),
+          },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {});
+      // #endregion
+
       if (!name) {
         setFieldError("name", "Le nom est obligatoire.");
         hasError = true;
@@ -298,6 +322,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (hasError) return;
 
       try {
+        // #region agent log
+        fetch("http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Debug-Session-Id": "2a0d40",
+          },
+          body: JSON.stringify({
+            sessionId: "2a0d40",
+            runId: "contact-form",
+            hypothesisId: "H2",
+            location: "main.js:contact-submit:before-fetch",
+            message: "Contact form about to call /api/contact",
+            data: {
+              nameLength: name.length,
+              emailDomain: email.includes("@") ? email.split("@")[1] : null,
+              subjectLength: subject.length,
+            },
+            timestamp: Date.now(),
+          }),
+        }).catch(() => {});
+        // #endregion
+
         const res = await fetch("/api/contact", {
           method: "POST",
           headers: {
@@ -310,6 +357,27 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error("Network response was not ok");
         }
 
+        // #region agent log
+        fetch("http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Debug-Session-Id": "2a0d40",
+          },
+          body: JSON.stringify({
+            sessionId: "2a0d40",
+            runId: "contact-form",
+            hypothesisId: "H3",
+            location: "main.js:contact-submit:after-fetch",
+            message: "Contact form fetch success",
+            data: {
+              status: 200,
+            },
+            timestamp: Date.now(),
+          }),
+        }).catch(() => {});
+        // #endregion
+
         contactForm.reset();
         if (successEl) {
           successEl.textContent =
@@ -321,6 +389,27 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 4000);
         }
       } catch (error) {
+        // #region agent log
+        fetch("http://127.0.0.1:7375/ingest/6fb74847-7909-4675-b926-89f5fdaa0f42", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Debug-Session-Id": "2a0d40",
+          },
+          body: JSON.stringify({
+            sessionId: "2a0d40",
+            runId: "contact-form",
+            hypothesisId: "H4",
+            location: "main.js:contact-submit:catch",
+            message: "Contact form fetch error",
+            data: {
+              errorMessage: error instanceof Error ? error.message : String(error),
+            },
+            timestamp: Date.now(),
+          }),
+        }).catch(() => {});
+        // #endregion
+
         if (successEl) {
           successEl.textContent =
             "Une erreur est survenue lors de l’envoi. Merci de réessayer plus tard.";
