@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   try {
     await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
-      to: "mahdichaouch435@gmail.com",
+      to: "mahdichaouch67@icloud.com",
       subject: `Portfolio contact: ${subject || "Message"}`,
       replyTo: email,
       html: `
