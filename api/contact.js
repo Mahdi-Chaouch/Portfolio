@@ -1,26 +1,24 @@
-import { Resend } from "resend";
+const { Resend } = require("resend");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(req, res) {
-
+module.exports = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, email, subject, message } = req.body;
+  const { name, email, subject, message } = req.body || {};
 
   if (!name || !email || !message) {
     return res.status(400).json({ error: "Missing fields" });
   }
 
   try {
-
-    const data = await resend.emails.send({
+    await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
       to: "mahdichaouch435@gmail.com",
       subject: `Portfolio contact: ${subject || "Message"}`,
-      reply_to: email,
+      replyTo: email,
       html: `
         <h2>Nouveau message du portfolio</h2>
 
@@ -30,17 +28,15 @@ export default async function handler(req, res) {
 
         <p><strong>Message :</strong></p>
         <p>${message}</p>
-      `
+      `,
     });
 
     res.status(200).json({ success: true });
-
   } catch (error) {
-
     console.error(error);
 
     res.status(500).json({
-      error: "Email failed"
+      error: "Email failed",
     });
   }
-}
+};
