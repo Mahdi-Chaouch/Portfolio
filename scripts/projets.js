@@ -36,6 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Bouton "Voir les screenshots" : ouvrir la section + scroller vers les images
+  const screenshotButtons = document.querySelectorAll(".btn-screenshots");
+  screenshotButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const href = btn.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+
+      event.preventDefault();
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      const details = target.closest(".project-more");
+      if (details && details.hidden) {
+        const toggle = document.querySelector(
+          `[aria-controls="${details.id}"]`,
+        );
+        if (toggle) {
+          toggle.setAttribute("aria-expanded", "true");
+          details.hidden = false;
+        }
+      }
+
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  });
+
   // Compteur GitHub : afficher étoiles, forks, dernier commit (données statiques ou API)
   const githubBlocks = document.querySelectorAll(".project-github-stats[data-repo]");
   githubBlocks.forEach((block) => {

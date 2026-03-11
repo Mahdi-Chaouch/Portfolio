@@ -225,4 +225,88 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     sectionReveals.forEach((section) => revealObserver.observe(section));
   }
+
+  // Page Contact : validation simple du formulaire (front uniquement)
+  const contactForm = document.querySelector(".contact-form");
+  if (contactForm) {
+    const successEl = contactForm.querySelector(".contact-form-success");
+
+    function setFieldError(fieldName, message) {
+      const input = contactForm.querySelector(`[name="${fieldName}"]`);
+      const errorEl = contactForm.querySelector(
+        `.contact-form-error[data-field="${fieldName}"]`
+      );
+      if (!input || !errorEl) return;
+      if (message) {
+        input.setAttribute("aria-invalid", "true");
+        errorEl.textContent = message;
+      } else {
+        input.removeAttribute("aria-invalid");
+        errorEl.textContent = "";
+      }
+    }
+
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (successEl) {
+        successEl.textContent = "";
+      }
+
+      const formData = new FormData(contactForm);
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const subject = String(formData.get("subject") || "").trim();
+      const message = String(formData.get("message") || "").trim();
+
+      let hasError = false;
+
+      if (!name) {
+        setFieldError("name", "Le nom est obligatoire.");
+        hasError = true;
+      } else {
+        setFieldError("name", "");
+      }
+
+      if (!email) {
+        setFieldError("email", "L’email est obligatoire.");
+        hasError = true;
+      } else {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          setFieldError("email", "Merci d’indiquer un email valide.");
+          hasError = true;
+        } else {
+          setFieldError("email", "");
+        }
+      }
+
+      if (!subject) {
+        setFieldError("subject", "Le sujet est obligatoire.");
+        hasError = true;
+      } else {
+        setFieldError("subject", "");
+      }
+
+      if (!message) {
+        setFieldError("message", "Le message est obligatoire.");
+        hasError = true;
+      } else {
+        setFieldError("message", "");
+      }
+
+      if (hasError) return;
+
+      contactForm.reset();
+      if (successEl) {
+        successEl.textContent =
+          "Merci pour votre message ! Le formulaire sera bientôt connecté.";
+        window.setTimeout(() => {
+          if (successEl.textContent) {
+            successEl.textContent = "";
+          }
+        }, 4000);
+      }
+    });
+  }
 });
