@@ -126,9 +126,20 @@
         const displayDiv = document.getElementById("cheerpjDisplay");
         cheerpjCreateDisplay(800, 600, displayDiv);
 
-        await cheerpjRunMain("fr.sae.demineur.LanceurGraphique", "/app/assets/demineur.jar");
+        // cheerpjRunMain ne résout jamais pour une app Swing (main() tourne indéfiniment)
+        // On cache le spinner après un délai, et on gère les erreurs séparément
+        cheerpjRunMain("fr.sae.demineur.LanceurGraphique", "/app/assets/demineur.jar")
+          .catch(err => {
+            console.error("CheerpJ error:", err);
+            spinner.style.display = "none";
+            loadingText.style.display = "block";
+            loadingText.textContent = "Erreur : " + (err?.message || String(err));
+          });
 
-        document.getElementById("loadingContainer").style.display = "none";
+        // Laisser le temps à la JVM de démarrer, puis cacher le spinner
+        setTimeout(() => {
+          document.getElementById("loadingContainer").style.display = "none";
+        }, 4000);
       } catch (err) {
         console.error("CheerpJ error:", err);
         spinner.style.display = "none";
