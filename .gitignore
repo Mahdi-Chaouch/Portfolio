@@ -8,6 +8,9 @@ Thumbs.db
 *.swp
 *.swo
 *~
+.cursor/*
+.cursor
+.claude
 
 # Logs / cache
 *.log
