@@ -104,7 +104,7 @@
     <div id="cheerpjDisplay"></div>
   </div>
 
-  <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
+  <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
   <script>
     async function initGame() {
       try {
@@ -115,8 +115,8 @@
         
         document.getElementById("loadingContainer").style.display = "none";
         
-        // Launch MainGraphique from the jar in the assets folder
-        await cheerpjRunMain("MainGraphique", "/app/assets/demineur.jar");
+        // Launch LanceurGraphique from the jar in the assets folder
+        await cheerpjRunMain("LanceurGraphique", "/app/assets/demineur.jar");
       } catch (err) {
         console.error("CheerpJ error:", err);
         document.getElementById("loadingText").textContent = "Une erreur est survenue lors du chargement du jeu.";
