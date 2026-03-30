@@ -107,20 +107,32 @@
   <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
   <script>
     async function initGame() {
+      const loadingText = document.getElementById("loadingText");
+      const spinner = document.querySelector(".loading-spinner");
+
+      // CheerpJ v4 requires SharedArrayBuffer (cross-origin isolation)
+      if (!crossOriginIsolated) {
+        spinner.style.display = "none";
+        loadingText.textContent = "Erreur : la page n'est pas isolée cross-origin. Déployez sur Vercel ou ajoutez les en-têtes COOP/COEP.";
+        console.error("crossOriginIsolated is false — missing COOP/COEP headers");
+        return;
+      }
+
       try {
-        await cheerpjInit();
+        loadingText.textContent = "Initialisation de la JVM...";
+        await cheerpjInit({ status: "none" });
+
+        loadingText.textContent = "Chargement du jeu...";
         const displayDiv = document.getElementById("cheerpjDisplay");
-        // Creates auto-sized display container
         cheerpjCreateDisplay(800, 600, displayDiv);
 
-        // Launch LanceurGraphique from the jar in the assets folder
         await cheerpjRunMain("fr.sae.demineur.LanceurGraphique", "/app/assets/demineur.jar");
 
         document.getElementById("loadingContainer").style.display = "none";
       } catch (err) {
         console.error("CheerpJ error:", err);
-        document.getElementById("loadingText").textContent = "Une erreur est survenue lors du chargement du jeu.";
-        document.querySelector(".loading-spinner").style.display = "none";
+        spinner.style.display = "none";
+        loadingText.textContent = "Erreur : " + (err?.message || String(err));
       }
     }
     initGame();
