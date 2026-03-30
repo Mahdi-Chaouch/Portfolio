@@ -102,27 +102,25 @@
   </div>
 
   <script>
-    // Désinscrire tout ancien service worker (COOP/COEP non nécessaires avec CheerpJ 3.0)
+    // Désinscrire tout ancien service worker
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.getRegistrations().then(regs => {
-        regs.forEach(r => r.unregister());
-      });
+      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
     }
   </script>
-  <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+  <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
   <script>
     async function initGame() {
       const loadingText = document.getElementById("loadingText");
       const spinner = document.querySelector(".loading-spinner");
       try {
-        await cheerpjInit();
+        await cheerpjInit({ status: "none" });
 
         const displayDiv = document.getElementById("cheerpjDisplay");
         cheerpjCreateDisplay(500, 500, displayDiv);
 
         cheerpjRunMain("fr.sae.demineur.LanceurGraphique", "/app/assets/demineur.jar")
           .catch(err => {
-            console.error("CheerpJ error:", err);
+            console.error("Java error:", err);
             spinner.style.display = "none";
             loadingText.style.display = "block";
             loadingText.textContent = "Erreur Java : " + (err?.message || String(err));
@@ -134,7 +132,7 @@
       } catch (err) {
         console.error("CheerpJ init error:", err);
         spinner.style.display = "none";
-        loadingText.textContent = "Erreur : " + (err?.message || String(err));
+        loadingText.textContent = "Erreur init : " + (err?.message || String(err));
       }
     }
     initGame();
