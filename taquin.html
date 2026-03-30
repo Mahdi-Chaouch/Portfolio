@@ -7,85 +7,204 @@
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --card: #0f172a;
+      --accent: #22d3ee;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      background-color: #0d1117;
-      color: #fff;
-      font-family: system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(34,211,238,0.12), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(59,130,246,0.10), transparent 28%),
+                  var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
     }
     header {
       width: 100%;
-      padding: 1.5rem 2rem;
+      padding: 1.2rem 2rem;
       display: flex;
-      justify-content: flex-start;
-      box-sizing: border-box;
-      background: rgba(13, 17, 23, 0.8);
-      backdrop-filter: blur(10px);
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(11, 18, 32, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: sticky;
+      top: 0;
       z-index: 10;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .btn-back {
-      color: #8b949e;
+      color: var(--muted);
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 0.95rem;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      transition: all 0.2s;
-      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
     }
-    .btn-back:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-    #game-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .btn-back:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
+    main { flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
       align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 { margin: 0 0 0.5rem; font-size: clamp(1.8rem, 4vw, 2.4rem); }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .badge {
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #0b1220;
+      background: linear-gradient(120deg, #22d3ee, #3b82f6);
+      font-weight: 700;
+    }
+    .controls {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    }
+    .control-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .control-label { color: var(--muted); font-size: 0.9rem; }
+    select, button {
       width: 100%;
-      position: relative;
-    }
-    #cheerpjDisplay {
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-    .loading-container {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255,255,255,0.1);
-      border-top-color: #58a6ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    .loading-text {
-      color: rgba(255,255,255,0.7);
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
       font-size: 1rem;
-      animation: pulse 1.5s infinite;
-      text-align: center;
-      max-width: 420px;
+      transition: all 0.2s ease;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
+    select:focus, button:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button {
+      background: linear-gradient(120deg, #22d3ee, #3b82f6);
+      color: #0b1220;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 10px 30px rgba(34,211,238,0.35);
+    }
+    button:hover { transform: translateY(-1px); box-shadow: 0 14px 40px rgba(59,130,246,0.35); }
+    .game-area {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .board-wrapper {
+      background: var(--panel);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 30px 70px rgba(0,0,0,0.35);
+    }
+    .board {
+      position: relative;
+      width: min(90vw, 620px);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0f172a;
+      border: 1px solid rgba(255,255,255,0.05);
+      touch-action: manipulation;
+    }
+    .tile {
+      position: absolute;
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tile:hover { box-shadow: 0 12px 30px rgba(34,211,238,0.25); }
+    .tile__label {
+      position: absolute;
+      bottom: 6px;
+      right: 10px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.45);
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(34,211,238,0.18), rgba(59,130,246,0.25));
+      color: #0b1220;
+      display: grid;
+      place-items: center;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-align: center;
+      backdrop-filter: blur(2px);
+      border-radius: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease;
+    }
+    .overlay.visible { opacity: 1; pointer-events: auto; }
+    .sidecard {
+      background: var(--panel);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+    .sidecard h2 { margin: 0 0 0.65rem; font-size: 1.1rem; }
+    .sidecard p { margin: 0 0 0.75rem; color: var(--muted); line-height: 1.5; }
+    .preview {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: #0f172a;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+    .stats { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    .stat {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 0.65rem 0.8rem;
+      color: var(--muted);
+      font-weight: 700;
+      min-width: 110px;
+      text-align: center;
+    }
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .game-area { grid-template-columns: 1fr; }
+      .board { width: 100%; }
     }
   </style>
 </head>
@@ -94,50 +213,248 @@
     <a href="projets.html#taquin" class="btn-back">
       <i class="fa-solid fa-arrow-left"></i> Retour aux projets
     </a>
+    <span style="color: var(--muted); font-weight: 600;">Taquin · version navigateur (reprise du projet C89)</span>
   </header>
-  <div id="game-container">
-    <div class="loading-container" id="loadingContainer">
-      <div class="loading-spinner"></div>
-      <div class="loading-text" id="loadingText">Chargement du Taquin (Java) - cela peut prendre quelques secondes...</div>
-    </div>
-    <div id="cheerpjDisplay"></div>
-  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Jouer au Taquin en ligne</h1>
+        <p>Portage web du projet Taquin codé en C89. Choisis une image, règle la taille de la grille (3 à 8) et lance une partie directement dans ton navigateur.</p>
+        <div class="badges">
+          <span class="badge"><i class="fa-solid fa-code"></i> C89 · Portage JS</span>
+          <span class="badge"><i class="fa-solid fa-gamepad"></i> Clavier & souris</span>
+          <span class="badge"><i class="fa-solid fa-stopwatch"></i> Shuffle solvable</span>
+        </div>
+      </div>
+      <div class="sidecard">
+        <h2>Contrôles</h2>
+        <p>
+          <strong>Souris :</strong> clique sur une tuile adjacente au bloc vide pour la déplacer.<br>
+          <strong>Clavier :</strong> flèches ← ↑ → ↓ déplacent le bloc vide.<br>
+          <strong>Reset :</strong> choisis une taille ou une image puis clique « Lancer / Mélanger ».
+        </p>
+        <div class="stats">
+          <div class="stat">Coups : <span id="moveCount">0</span></div>
+          <div class="stat">Taille : <span id="sizeLabel">4 x 4</span></div>
+          <div class="stat">Image : <span id="imgLabel">Image 1</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <div class="control-group">
+        <label class="control-label" for="sizeSelect">Taille de grille</label>
+        <select id="sizeSelect">
+          <option value="3">3 x 3</option>
+          <option value="4" selected>4 x 4</option>
+          <option value="5">5 x 5</option>
+          <option value="6">6 x 6</option>
+          <option value="7">7 x 7</option>
+          <option value="8">8 x 8</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="imageSelect">Image</label>
+        <select id="imageSelect">
+          <option value="img1">Image 1</option>
+          <option value="img2">Image 2</option>
+          <option value="img3">Image 3</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Action</label>
+        <button id="startBtn" type="button"><i class="fa-solid fa-shuffle"></i> Lancer / Mélanger</button>
+      </div>
+    </section>
+
+    <section class="game-area">
+      <div class="board-wrapper">
+        <div id="board" class="board" aria-label="Grille de taquin"></div>
+        <div id="overlay" class="overlay">Bravo ! Puzzle résolu 🎉</div>
+      </div>
+      <div class="sidecard">
+        <h2>Aperçu</h2>
+        <img id="preview" class="preview" src="assets/taquin-ref1.jpg" alt="Aperçu de l'image du puzzle" />
+        <p style="margin-top:0.75rem;">Images issues du projet original (<a href="https://github.com/Mahdi-Chaouch/Taquin" target="_blank" rel="noreferrer noopener" style="color: var(--accent); font-weight: 700; text-decoration: none;">repo GitHub</a>).</p>
+      </div>
+    </section>
+  </main>
 
   <script>
-    // Desinscrire tout ancien service worker
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+    const images = {
+      img1: { src: "assets/taquin-img1.jpg", preview: "assets/taquin-ref1.jpg", label: "Image 1" },
+      img2: { src: "assets/taquin-img2.jpg", preview: "assets/taquin-ref2.jpg", label: "Image 2" },
+      img3: { src: "assets/taquin-img3.jpg", preview: "assets/taquin-ref3.jpg", label: "Image 3" },
+    };
+
+    const boardEl = document.getElementById("board");
+    const overlayEl = document.getElementById("overlay");
+    const sizeSelect = document.getElementById("sizeSelect");
+    const imageSelect = document.getElementById("imageSelect");
+    const startBtn = document.getElementById("startBtn");
+    const previewImg = document.getElementById("preview");
+    const moveCountEl = document.getElementById("moveCount");
+    const sizeLabel = document.getElementById("sizeLabel");
+    const imgLabel = document.getElementById("imgLabel");
+
+    let size = parseInt(sizeSelect.value, 10);
+    let imgKey = imageSelect.value;
+    let tiles = [];        // current board (array of numbers, 0 = empty)
+    let emptyIndex = 0;    // position of empty tile
+    let tileSizePx = 0;
+    let moves = 0;
+
+    const solvedBoard = (n) => {
+      const arr = [];
+      for (let i = 1; i < n * n; i++) arr.push(i);
+      arr.push(0);
+      return arr;
+    };
+
+    const indexToRowCol = (idx, n) => [Math.floor(idx / n), idx % n];
+    const rowColToIndex = (r, c, n) => r * n + c;
+
+    function updateStats() {
+      moveCountEl.textContent = moves;
+      sizeLabel.textContent = `${size} x ${size}`;
+      imgLabel.textContent = images[imgKey].label;
     }
-  </script>
-  <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
-  <script>
-    async function initGame() {
-      const loadingText = document.getElementById("loadingText");
-      const spinner = document.querySelector(".loading-spinner");
-      try {
-        await cheerpjInit({ status: "none" });
 
-        const displayDiv = document.getElementById("cheerpjDisplay");
-        cheerpjCreateDisplay(500, 500, displayDiv);
+    function buildDOM() {
+      boardEl.innerHTML = "";
+      const boardRect = boardEl.getBoundingClientRect();
+      tileSizePx = boardRect.width / size;
+      tiles.forEach((value, idx) => {
+        if (value === 0) return;
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.dataset.index = idx;
+        const [r, c] = indexToRowCol(idx, size);
+        const [origR, origC] = indexToRowCol(value - 1, size);
+        tile.style.width = `${tileSizePx}px`;
+        tile.style.height = `${tileSizePx}px`;
+        tile.style.transform = `translate(${c * tileSizePx}px, ${r * tileSizePx}px)`;
+        tile.style.backgroundImage = `url(${images[imgKey].src})`;
+        tile.style.backgroundSize = `${tileSizePx * size}px ${tileSizePx * size}px`;
+        tile.style.backgroundPosition = `-${origC * tileSizePx}px -${origR * tileSizePx}px`;
 
-        cheerpjRunMain("LanceurGraphique", "/app/assets/taquin.jar")
-          .catch(err => {
-            console.error("Java error:", err);
-            spinner.style.display = "none";
-            loadingText.style.display = "block";
-            loadingText.textContent = "Erreur Java : " + (err?.message || String(err));
-          });
+        const label = document.createElement("div");
+        label.className = "tile__label";
+        label.textContent = value;
+        tile.appendChild(label);
 
-        setTimeout(() => {
-          document.getElementById("loadingContainer").style.display = "none";
-        }, 5000);
-      } catch (err) {
-        console.error("CheerpJ init error:", err);
-        spinner.style.display = "none";
-        loadingText.textContent = "Erreur init : " + (err?.message || String(err));
+        boardEl.appendChild(tile);
+      });
+    }
+
+    function getNeighbors(idx) {
+      const [r, c] = indexToRowCol(idx, size);
+      const neighbors = [];
+      if (r > 0) neighbors.push(rowColToIndex(r - 1, c, size));
+      if (r < size - 1) neighbors.push(rowColToIndex(r + 1, c, size));
+      if (c > 0) neighbors.push(rowColToIndex(r, c - 1, size));
+      if (c < size - 1) neighbors.push(rowColToIndex(r, c + 1, size));
+      return neighbors;
+    }
+
+    function shuffleBoard() {
+      tiles = solvedBoard(size);
+      emptyIndex = tiles.indexOf(0);
+      const shuffleMoves = size * size * 30;
+      for (let i = 0; i < shuffleMoves; i++) {
+        const neighbors = getNeighbors(emptyIndex);
+        const target = neighbors[Math.floor(Math.random() * neighbors.length)];
+        swapTiles(target);
+      }
+      moves = 0;
+      updateStats();
+      render();
+    }
+
+    function swapTiles(targetIdx) {
+      const tmp = tiles[targetIdx];
+      tiles[targetIdx] = tiles[emptyIndex];
+      tiles[emptyIndex] = tmp;
+      emptyIndex = targetIdx;
+    }
+
+    function isSolved() {
+      const reference = solvedBoard(size);
+      return tiles.every((v, i) => v === reference[i]);
+    }
+
+    function render() {
+      overlayEl.classList.remove("visible");
+      buildDOM();
+    }
+
+    function handleTileClick(idx) {
+      const isNeighbor = getNeighbors(emptyIndex).includes(idx);
+      if (!isNeighbor) return;
+      swapTiles(idx);
+      moves += 1;
+      updateStats();
+      render();
+      if (isSolved()) {
+        overlayEl.classList.add("visible");
       }
     }
-    initGame();
+
+    function handleKey(e) {
+      const keyMap = { ArrowUp: 1, ArrowDown: -1, ArrowLeft: 2, ArrowRight: -2 };
+      if (!keyMap[e.key]) return;
+      e.preventDefault();
+      const [r, c] = indexToRowCol(emptyIndex, size);
+      let target = null;
+      if (e.key === "ArrowUp" && r < size - 1) target = rowColToIndex(r + 1, c, size);
+      if (e.key === "ArrowDown" && r > 0) target = rowColToIndex(r - 1, c, size);
+      if (e.key === "ArrowLeft" && c < size - 1) target = rowColToIndex(r, c + 1, size);
+      if (e.key === "ArrowRight" && c > 0) target = rowColToIndex(r, c - 1, size);
+      if (target !== null) {
+        swapTiles(target);
+        moves += 1;
+        updateStats();
+        render();
+        if (isSolved()) overlayEl.classList.add("visible");
+      }
+    }
+
+    // Event listeners
+    boardEl.addEventListener("click", (e) => {
+      const tileEl = e.target.closest(".tile");
+      if (!tileEl) return;
+      const idx = parseInt(tileEl.dataset.index, 10);
+      handleTileClick(idx);
+    });
+
+    startBtn.addEventListener("click", () => {
+      size = parseInt(sizeSelect.value, 10);
+      imgKey = imageSelect.value;
+      previewImg.src = images[imgKey].preview;
+      sizeLabel.textContent = `${size} x ${size}`;
+      imgLabel.textContent = images[imgKey].label;
+      shuffleBoard();
+    });
+
+    imageSelect.addEventListener("change", () => {
+      imgKey = imageSelect.value;
+      previewImg.src = images[imgKey].preview;
+      imgLabel.textContent = images[imgKey].label;
+      shuffleBoard();
+    });
+
+    sizeSelect.addEventListener("change", () => {
+      size = parseInt(sizeSelect.value, 10);
+      sizeLabel.textContent = `${size} x ${size}`;
+      shuffleBoard();
+    });
+
+    window.addEventListener("keydown", handleKey);
+    window.addEventListener("resize", () => buildDOM());
+
+    // Init
+    shuffleBoard();
   </script>
 </body>
 </html>
