@@ -9,7 +9,7 @@
   <style>
     body {
       margin: 0;
-      background-color: #0d1117; /* Assorti au thème sombre */
+      background-color: #0d1117;
       color: #fff;
       font-family: system-ui, -apple-system, sans-serif;
       display: flex;
@@ -59,7 +59,6 @@
       border-radius: 4px;
       overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      background: transparent;
     }
     .loading-container {
       position: absolute;
@@ -81,9 +80,7 @@
       font-size: 1rem;
       animation: pulse 1.5s infinite;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes pulse {
       0%, 100% { opacity: 0.5; }
       50% { opacity: 1; }
@@ -105,40 +102,23 @@
   </div>
 
   <script>
-    // Enregistre le service worker COI pour garantir COOP/COEP via SW
-    // (évite le conflit avec l'iframe c.html du compositor CheerpJ)
+    // Désinscrire tout ancien service worker (COOP/COEP non nécessaires avec CheerpJ 3.0)
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/coi-serviceworker.js").then(reg => {
-        if (!crossOriginIsolated) {
-          // Premier chargement sans isolation : recharger après activation du SW
-          reg.addEventListener("updatefound", () => {
-            reg.installing.addEventListener("statechange", e => {
-              if (e.target.state === "activated") window.location.reload();
-            });
-          });
-          if (reg.active) window.location.reload();
-        }
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(r => r.unregister());
       });
     }
   </script>
-  <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
+  <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
   <script>
     async function initGame() {
       const loadingText = document.getElementById("loadingText");
       const spinner = document.querySelector(".loading-spinner");
-
-      if (!crossOriginIsolated) {
-        loadingText.textContent = "Isolation cross-origin en cours, rechargement...";
-        return;
-      }
-
       try {
-        loadingText.textContent = "Initialisation de la JVM...";
-        await cheerpjInit({ status: "none" });
+        await cheerpjInit();
 
-        loadingText.textContent = "Chargement du jeu...";
         const displayDiv = document.getElementById("cheerpjDisplay");
-        cheerpjCreateDisplay(800, 600, displayDiv);
+        cheerpjCreateDisplay(500, 500, displayDiv);
 
         cheerpjRunMain("fr.sae.demineur.LanceurGraphique", "/app/assets/demineur.jar")
           .catch(err => {
@@ -150,7 +130,7 @@
 
         setTimeout(() => {
           document.getElementById("loadingContainer").style.display = "none";
-        }, 4000);
+        }, 5000);
       } catch (err) {
         console.error("CheerpJ init error:", err);
         spinner.style.display = "none";
