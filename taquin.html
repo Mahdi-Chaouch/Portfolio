@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taquin - Jouer en ligne</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      background-color: #0d1117;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      background: rgba(13, 17, 23, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-back {
+      color: #8b949e;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    #game-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+    #cheerpjDisplay {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .loading-container {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #58a6ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .loading-text {
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      animation: pulse 1.5s infinite;
+      text-align: center;
+      max-width: 420px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="projets.html#taquin" class="btn-back">
+      <i class="fa-solid fa-arrow-left"></i> Retour aux projets
+    </a>
+  </header>
+  <div id="game-container">
+    <div class="loading-container" id="loadingContainer">
+      <div class="loading-spinner"></div>
+      <div class="loading-text" id="loadingText">Chargement du Taquin (Java) - cela peut prendre quelques secondes...</div>
+    </div>
+    <div id="cheerpjDisplay"></div>
+  </div>
+
+  <script>
+    // Desinscrire tout ancien service worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+    }
+  </script>
+  <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
+  <script>
+    async function initGame() {
+      const loadingText = document.getElementById("loadingText");
+      const spinner = document.querySelector(".loading-spinner");
+      try {
+        await cheerpjInit({ status: "none" });
+
+        const displayDiv = document.getElementById("cheerpjDisplay");
+        cheerpjCreateDisplay(500, 500, displayDiv);
+
+        cheerpjRunMain("LanceurGraphique", "/app/assets/taquin.jar")
+          .catch(err => {
+            console.error("Java error:", err);
+            spinner.style.display = "none";
+            loadingText.style.display = "block";
+            loadingText.textContent = "Erreur Java : " + (err?.message || String(err));
+          });
+
+        setTimeout(() => {
+          document.getElementById("loadingContainer").style.display = "none";
+        }, 5000);
+      } catch (err) {
+        console.error("CheerpJ init error:", err);
+        spinner.style.display = "none";
+        loadingText.textContent = "Erreur init : " + (err?.message || String(err));
+      }
+    }
+    initGame();
+  </script>
+</body>
+</html>
