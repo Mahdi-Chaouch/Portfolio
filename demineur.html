@@ -118,7 +118,7 @@
         const displayDiv = document.getElementById("cheerpjDisplay");
         cheerpjCreateDisplay(500, 500, displayDiv);
 
-        cheerpjRunMain("demineur.LanceurGraphique", "/app/assets/demineur.jar")
+        cheerpjRunMain("LanceurGraphique", "/app/assets/demineur.jar")
           .catch(err => {
             console.error("Java error:", err);
             spinner.style.display = "none";
@@ -139,4 +139,8 @@
   </script>
 </body>
 </html>
+
+
+
+
 

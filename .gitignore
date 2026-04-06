@@ -10,7 +10,11 @@ Thumbs.db
 *~
 .cursor/*
 .cursor
+.claude/
 .claude
+.claude/*
+.claude/settings.json
+
 
 # Logs / cache
 *.log
