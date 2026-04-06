@@ -16,7 +16,7 @@ Ce projet est la base d'un portfolio d'étudiant en informatique, en **dark mode
 
 ## Où modifier / ajouter des projets
 
-- Ajoute tes images dans le dossier `assets/`.
+- Ajoute les images dans le dossier `assets/`.
 - Ajoute/modifie les sections HTML dans `index.html` (cartes de projets, texte de présentation, etc.).
 - Ajuste le style dans `styles/main.css`.
 - Ajoute des interactions (par exemple, génération dynamique des projets) dans `scripts/main.js`.
